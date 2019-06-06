@@ -17,15 +17,22 @@ class LaunchRequestHandler implements RequestHandler {
   }
 
   public async handle(handlerInput: HandlerInput): Promise<Response> {
+    const attributesManager = handlerInput.attributesManager;
     const responseBuilder = handlerInput.responseBuilder;
+
+    const attributes = await attributesManager.getSessionAttributes() || {};
+    if (Object.keys(attributes).length === 0) {
+      attributes.playbackService = this.playbackService;
+    }
+    attributesManager.setSessionAttributes(attributes);
+
     const value = await this.playbackService.findVideos();
+
     const say = `welcome from typescript, the lenght of videos is ${value.length} `;
 
-    handlerInput.attributesManager.setSessionAttributes({
-      playbackService: this.playbackService,
-    });
-
-    return responseBuilder.speak(say).getResponse();
+    return responseBuilder
+      .speak(say)
+      .getResponse();
   }
 }
 
