@@ -27,32 +27,39 @@ class BCOVPlayVideoIntent implements RequestHandler {
       playlist = await BCOVPlaybackService.findVideos(playbackService);
     }
 
-    if (playlist.length > 0) {
-      videoToPlay = playlist[0];
-      playlist.shift();
+    const supportVideo = Utils.supportVideo(handlerInput);
+    const supportAudio = Utils.supportAudio(handlerInput);
 
-      delete attributes['playlist'];
-      attributes.playlist = playlist;
-      attributesManager.setSessionAttributes(attributes);
-      const supportVideo = Utils.supportVideo(handlerInput);
-      const supportAudio = Utils.supportAudio(handlerInput);
-
-      if (supportVideo) {
-        responseBuilder
-          .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
-          .speak(`Playing: ${videoToPlay.title}`);
-      } else {
-        return responseBuilder
-          .speak(`video cannot be played but audio is ${supportAudio}`)
-          .getResponse();
-      }
-    } else {
-      return responseBuilder
-        .speak('no videos to play')
-        .getResponse();;
-    }
     return responseBuilder
+      .speak(`video is ${supportVideo} and audio is ${supportAudio}`)
       .getResponse();
+
+    /* if (playlist.length > 0) {
+       videoToPlay = playlist[0];
+       playlist.shift();
+ 
+       delete attributes['playlist'];
+       attributes.playlist = playlist;
+       attributesManager.setSessionAttributes(attributes);
+       const supportVideo = Utils.supportVideo(handlerInput);
+       const supportAudio = Utils.supportAudio(handlerInput);
+ /*
+       if (supportVideo) {
+         return responseBuilder
+           
+           .speak(`Playing: ${sup}`).getResponse();
+       } else {
+         return responseBuilder
+           .speak(`video cannot be played but audio is ${supportAudio}`)
+           .getResponse();
+       }
+     } else {
+       return responseBuilder
+         .speak('no videos to play')
+         .getResponse();;
+     }
+     return responseBuilder
+       .getResponse();*/
   }
 }
 
