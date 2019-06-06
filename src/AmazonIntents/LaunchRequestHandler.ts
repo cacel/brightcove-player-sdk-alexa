@@ -3,7 +3,7 @@
 import { BCOVPlaybackServiceData } from '../BCOVPlaybackService';
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
-import { ssml, renderXml } from "fluent-ssml";
+import { ssml, renderXml } from 'fluent-ssml';
 
 class LaunchRequestHandler implements RequestHandler {
   private readonly playbackService: BCOVPlaybackServiceData;
@@ -21,7 +21,7 @@ class LaunchRequestHandler implements RequestHandler {
     const attributesManager = handlerInput.attributesManager;
     const responseBuilder = handlerInput.responseBuilder;
 
-    const attributes = await attributesManager.getSessionAttributes() || {};
+    const attributes = (await attributesManager.getSessionAttributes()) || {};
     if (Object.keys(attributes).length === 0) {
       attributes.playbackService = this.playbackService;
     }
@@ -30,21 +30,19 @@ class LaunchRequestHandler implements RequestHandler {
     const template = ssml()
       .p(
         ssml()
-          .sayAs("characters", "ssml")
-          .say("templates can get quite complicated")
+          .sayAs('characters', 'ssml')
+          .say('templates can get quite complicated'),
       )
       .p("it's important to keep them composable and parametric")
       .p(
         ssml()
-          .say("if you do")
-          .break({ strength: "strong" })
-          .say(p => `you are gonna keep your ${p.quality}`)
+          .say('if you do')
+          .break({ strength: 'strong' })
+          .say(p => `you are gonna keep your ${p.quality}`),
       )
-      .sayAs("interjection", "abracadabra");
+      .sayAs('interjection', 'abracadabra');
 
-    return responseBuilder
-      .speak(renderXml(template))
-      .getResponse();
+    return responseBuilder.speak(renderXml(template)).getResponse();
   }
 }
 

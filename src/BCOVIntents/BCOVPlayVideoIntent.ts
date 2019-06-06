@@ -3,7 +3,8 @@
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
 import { BCOVPlaybackService, Video } from '../BCOVPlaybackService';
-import { PLAYER_INTENTS } from '../Intents'
+import { PLAYER_INTENTS } from '../Intents';
+import { Utils } from '../Utils';
 
 class BCOVPlayVideoIntent implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
@@ -18,26 +19,32 @@ class BCOVPlayVideoIntent implements RequestHandler {
     const playbackService = attributes.playbackService;
 
     let videoToPlay: Video;
-    let videos: Video[];
-    if (attributes.hasOwnProperty('search')) {
-      videos = await BCOVPlaybackService.findVideos(playbackService, { q: 'axwell' });
-    } else if (attributes.hasOwnProperty('related')) {
-      const videoId = attributes.related;
-      videos = await BCOVPlaybackService.findVideosRelated(playbackService, videoId);
+    let playlist: Video[];
+
+    if (attributes.hasOwnProperty('playlist')) {
+      playlist = attributes.playlist;
     } else {
-      videos = await BCOVPlaybackService.findVideos(playbackService);
+      playlist = await BCOVPlaybackService.findVideos(playbackService);
     }
 
-    if (videos.length > 0) {
-      videoToPlay = videos[0];
-      responseBuilder.addVideoAppLaunchDirective(
-        videoToPlay.src,
-        videoToPlay.title
-      ).speak(`Playing: ${videoToPlay.title}`);
+    if (playlist.length > 0) {
+      videoToPlay = playlist[0];
+      playlist.shift();
+
+      delete attributes['playlist'];
+      attributes.playlist = playlist;
+      attributesManager.setSessionAttributes(attributes);
+
+      if (Utils.supportsDisplay(handlerInput)) {
+        responseBuilder
+          .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
+          .speak(`Playing: ${videoToPlay.title}`);
+      } else {
+        responseBuilder.speak('video cannot be played');
+      }
     }
 
-    return responseBuilder
-      .getResponse();
+    return responseBuilder.getResponse();
   }
 }
 

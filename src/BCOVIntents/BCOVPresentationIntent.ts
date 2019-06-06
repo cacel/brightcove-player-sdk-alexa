@@ -3,7 +3,7 @@
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
 import { BCOVPlaybackService } from '../BCOVPlaybackService';
-import { PLAYER_INTENTS } from '../Intents'
+import { PLAYER_INTENTS } from '../Intents';
 
 class BCOVPresentationIntent implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
