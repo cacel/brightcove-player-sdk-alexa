@@ -35,7 +35,7 @@ class BCOVPlayVideoIntent implements RequestHandler {
       attributes.playlist = playlist;
       attributesManager.setSessionAttributes(attributes);
 
-      if (Utils.supportsDisplay(handlerInput)) {
+      if (Utils.supportDisplay(handlerInput)) {
         responseBuilder
           .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
           .speak(`Playing: ${videoToPlay.title}`);
