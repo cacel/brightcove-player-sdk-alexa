@@ -16,8 +16,8 @@ class PlayRequestHandler implements RequestHandler {
     const attributes = await attributesManager.getSessionAttributes();
 
     const playbackService = attributes.playbackService;
-    // const t = await playbackService.findVideos({ q: 'axwell' });
-    const say = `playing ${playbackService}`;
+    const t = await playbackService.findVideos();
+    const say = `playing ${t.length}`;
 
     return responseBuilder
       .speak(say)
