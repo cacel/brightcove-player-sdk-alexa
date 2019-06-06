@@ -19,9 +19,12 @@ class PlayRequestHandler implements RequestHandler {
     const values = await playbackService.findVideos();
     const value = await playbackService.findVideos(param);
 
-    const say = `welcome from typescript, the lenght of videos is ${values.length} and testing: ${value.length}`;
+    const say = `playing cideo, the lenght of videos is ${values.length} and testing: ${value.length}`;
 
-    return responseBuilder.speak(say).getResponse();
+    return responseBuilder
+      .speak('hola2')
+      .reprompt('hola')
+      .getResponse();
   }
 }
 
