@@ -23,6 +23,7 @@
   "scripts": {
     "lint": "tslint --project \"./tsconfig.json\"",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "prepare": "npm run build",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "test": "mocha --require ts-node/register test/**/*.ts"
