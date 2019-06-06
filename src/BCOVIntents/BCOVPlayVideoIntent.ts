@@ -35,18 +35,17 @@ class BCOVPlayVideoIntent implements RequestHandler {
       attributes.playlist = playlist;
       attributesManager.setSessionAttributes(attributes);
 
-      if (!Utils.supportDisplay(handlerInput)) {
-        return responseBuilder
-          .speak('video cannot be played')
-          .getResponse();
-      } else {
+      if (Utils.supportDisplay(handlerInput)) {
         responseBuilder
           .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
           .speak(`Playing: ${videoToPlay.title}`);
-        return responseBuilder
-          .getResponse();
+      } else {
+        responseBuilder
+          .speak('video cannot be played')
       }
     }
+    return responseBuilder
+      .getResponse();
   }
 }
 
