@@ -39,13 +39,18 @@ class BCOVPlayVideoIntent implements RequestHandler {
         responseBuilder
           .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
           .speak(`Playing: ${videoToPlay.title}`);
+
+        return responseBuilder
+          .getResponse();
       } else {
-        responseBuilder
-          .speak('video cannot be played')
+        return responseBuilder
+          .speak('video cannot be played').getResponse();
       }
+    } else {
+      return responseBuilder
+        .speak('no videos to play')
+        .getResponse();
     }
-    return responseBuilder
-      .getResponse();
   }
 }
 
