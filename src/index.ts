@@ -1,4 +1,4 @@
 'use strict';
 
 export { BCOVPlayer } from './BCOVPlayer';
-export { BCOVPlaybackService } from './BCOVPlaybackService';
+export { BCOVPlaybackService, BCOVPlaybackServiceData, Video } from './BCOVPlaybackService';

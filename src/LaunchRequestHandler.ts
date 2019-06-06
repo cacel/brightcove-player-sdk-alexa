@@ -2,12 +2,12 @@
 
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
-import { BCOVPlaybackService } from './BCOVPlaybackService';
+import { BCOVPlaybackService, BCOVPlaybackServiceData } from './BCOVPlaybackService';
 
 class LaunchRequestHandler implements RequestHandler {
-  private readonly playbackService: BCOVPlaybackService;
+  private readonly playbackService: BCOVPlaybackServiceData;
 
-  constructor(playbackService: BCOVPlaybackService) {
+  constructor(playbackService: BCOVPlaybackServiceData) {
     this.playbackService = playbackService;
   }
 
@@ -20,19 +20,17 @@ class LaunchRequestHandler implements RequestHandler {
     const attributesManager = handlerInput.attributesManager;
     const responseBuilder = handlerInput.responseBuilder;
 
-    const attributes = await attributesManager.getSessionAttributes() || {};
+    const attributes = (await attributesManager.getSessionAttributes()) || {};
     if (Object.keys(attributes).length === 0) {
       attributes.playbackService = this.playbackService;
     }
     attributesManager.setSessionAttributes(attributes);
 
-    const value = await this.playbackService.findVideos();
+    const value = await BCOVPlaybackService.findVideos(this.playbackService);
 
     const say = `welcome from typescript, the lenght of videos is ${value.length} `;
 
-    return responseBuilder
-      .speak(say)
-      .getResponse();
+    return responseBuilder.speak(say).getResponse();
   }
 }
 

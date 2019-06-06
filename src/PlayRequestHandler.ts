@@ -16,7 +16,7 @@ class PlayRequestHandler implements RequestHandler {
     const attributes = await attributesManager.getSessionAttributes();
 
     const playbackService = attributes.playbackService;
-    const t = await playbackService.findVideos();
+    const t = await BCOVPlaybackService.findVideos(playbackService, { q: 'axwell' });
     const say = `playing ${t.length}`;
 
     return responseBuilder
