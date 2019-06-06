@@ -27,20 +27,12 @@ class LaunchRequestHandler implements RequestHandler {
     }
     attributesManager.setSessionAttributes(attributes);
 
-    const template = ssml()
-      .p(
-        ssml()
-          .sayAs('characters', 'ssml')
-          .say('templates can get quite complicated'),
-      )
-      .p("it's important to keep them composable and parametric")
-      .p(
-        ssml()
-          .say('if you do')
-          .break({ strength: 'strong' })
-          .say(p => `you are gonna keep your ${p.quality}`),
-      )
-      .sayAs('interjection', 'abracadabra');
+    const template = ssml().p(
+      ssml()
+        .break({ strength: 'strong', time: 1 })
+        .sayAs('interjection', 'hola')
+        .say('Welcome to Brightcove Player.'),
+    );
 
     return responseBuilder.speak(renderXml(template)).getResponse();
   }
