@@ -10,8 +10,18 @@ class PlayRequestHandler implements RequestHandler {
     return request.type === 'IntentRequest' && request.intent.name === 'PlayRequestHandler';
   }
 
-  public handle(handlerInput: HandlerInput): Response {
+  public async handle(handlerInput: HandlerInput): Promise<Response> {
+    const attributesManager = handlerInput.attributesManager;
     const responseBuilder = handlerInput.responseBuilder;
+    const attributes = await attributesManager.getSessionAttributes();
+
+    let say = `playing video, the lenght of videos is`;
+
+    if (attributes.lenght) {
+      const playbackService = attributes.playbackService as BCOVPlaybackService;
+      const t = await playbackService.findVideos({ q: 'axwell' });
+      say = `playing ${t.length}`;
+    }
     /*const playbackService = handlerInput.attributesManager.getSessionAttributes() as BCOVPlaybackService;
     const param = {
       q: 'testing',
@@ -19,7 +29,7 @@ class PlayRequestHandler implements RequestHandler {
     const values = await playbackService.findVideos();
     const value = await playbackService.findVideos(param);*/
 
-    const say = `playing video, the lenght of videos is`;
+
 
     return responseBuilder
       .speak(say)
