@@ -32,7 +32,7 @@ class LaunchRequestHandler implements RequestHandler {
       .break(500)
       .prosody({ rate: '0.8' })
       .say('Awkward pause')
-      .toString({ pretty: true });
+      .toString();
 
     return responseBuilder
       .speak(speechOutput)
