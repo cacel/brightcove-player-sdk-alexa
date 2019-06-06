@@ -28,7 +28,7 @@ class LaunchRequestHandler implements RequestHandler {
 
     const value = await BCOVPlaybackService.findVideos(this.playbackService);
 
-    const say = `welcome from typescript, the lenght of videos is ${value.length} `;
+    const say = `welcome from google!, the lenght of videos is ${value.length} `;
 
     return responseBuilder.speak(say).getResponse();
   }
