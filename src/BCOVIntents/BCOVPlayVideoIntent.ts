@@ -34,23 +34,25 @@ class BCOVPlayVideoIntent implements RequestHandler {
       delete attributes['playlist'];
       attributes.playlist = playlist;
       attributesManager.setSessionAttributes(attributes);
-      const supportsDisplay = Utils.supportDisplay(handlerInput);
+      const supportVideo = Utils.supportVideo(handlerInput);
+      const supportAudio = Utils.supportAudio(handlerInput);
 
-      responseBuilder.speak(`support display ${supportsDisplay}`);
-
-      if (supportsDisplay) {
+      if (supportVideo) {
         responseBuilder
           .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
           .speak(`Playing: ${videoToPlay.title}`);
       } else {
-        responseBuilder
-          .speak('video cannot be played')
+        return responseBuilder
+          .speak(`video cannot be played but audio is ${supportAudio}`)
+          .getResponse();
       }
     } else {
-      responseBuilder
-        .speak('no videos to play');
+      return responseBuilder
+        .speak('no videos to play')
+        .getResponse();;
     }
-    return responseBuilder.getResponse();
+    return responseBuilder
+      .getResponse();
   }
 }
 
