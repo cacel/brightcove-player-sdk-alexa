@@ -2,7 +2,7 @@
 
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
-import { BCOVPlaybackService, BCOVPlaybackServiceData } from './BCOVPlaybackService';
+import { BCOVPlaybackService, BCOVPlaybackServiceData } from '../BCOVPlaybackService';
 
 class LaunchRequestHandler implements RequestHandler {
   private readonly playbackService: BCOVPlaybackServiceData;

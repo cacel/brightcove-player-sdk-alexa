@@ -3,11 +3,12 @@
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
 import { BCOVPlaybackService } from '../BCOVPlaybackService';
+import { playerIntents } from '../Intents'
 
 class BCOVPresentationIntent implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest' && request.intent.name === 'BCOVPresentationIntent';
+    return request.type === 'IntentRequest' && request.intent.name === playerIntents.BCOVPresentationIntent;
   }
 
   public async handle(handlerInput: HandlerInput): Promise<Response> {

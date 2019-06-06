@@ -3,13 +3,13 @@
 import { SkillBuilders } from 'ask-sdk-core';
 import { LambdaHandler } from 'ask-sdk-core/dist/skill/factory/BaseSkillFactory';
 import { BCOVPlaybackServiceData } from './BCOVPlaybackService';
-import { LaunchRequestHandler } from './LaunchRequestHandler';
 import {
   BCOVPresentationIntent,
   BCOVSearchPlaylistIntent,
   BCOVSearchVideoIntent,
   BCOVSearchRelatedIntent,
-} from './BCOVIntents';
+  LaunchRequestHandler,
+} from './Intents';
 
 class BCOVPlayer {
   public readonly playbackService: BCOVPlaybackServiceData;

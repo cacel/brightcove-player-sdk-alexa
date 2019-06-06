@@ -22,6 +22,7 @@ class BCOVSearchPlaylistIntent implements RequestHandler {
     return responseBuilder
       .speak(say)
       .reprompt('hola')
+      .withShouldEndSession(false)
       .getResponse();
   }
 }
