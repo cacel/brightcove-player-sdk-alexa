@@ -22,6 +22,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "lint": "tslint --project \"./tsconfig.json\"",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "test": "mocha --require ts-node/register test/**/*.ts"
@@ -38,8 +39,10 @@
     "@types/sprintf-js": "^1.1.2",
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
+    "prettier": "^1.17.1",
     "ts-node": "^8.2.0",
     "tslint": "^5.17.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.1"
   },
   "dependencies": {
@@ -49,5 +52,8 @@
     "node-fetch": "^2.6.0",
     "sprintf-js": "^1.1.2",
     "url": "^0.11.0"
-  }
+  },
+  "files": [
+    "lib/**/*"
+  ]
 }
