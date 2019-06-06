@@ -49,6 +49,7 @@
   "dependencies": {
     "ask-sdk-core": "^2.6.0",
     "ask-sdk-model": "^1.16.0",
+    "fluent-ssml": "^0.2.7",
     "lodash": "^4.17.11",
     "node-fetch": "^2.6.0",
     "sprintf-js": "^1.1.2",

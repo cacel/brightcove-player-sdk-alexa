@@ -3,6 +3,7 @@
 import { BCOVPlaybackServiceData } from '../BCOVPlaybackService';
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
+import { ssml, renderXml } from "fluent-ssml";
 
 class LaunchRequestHandler implements RequestHandler {
   private readonly playbackService: BCOVPlaybackServiceData;
@@ -26,16 +27,23 @@ class LaunchRequestHandler implements RequestHandler {
     }
     attributesManager.setSessionAttributes(attributes);
 
-    const ssml = require('ssml');
-    const ssmlDoc = new ssml();
-    const speechOutput = ssmlDoc.say('This is a great voice application!')
-      .break(500)
-      .prosody({ rate: '0.8' })
-      .say('Awkward pause')
-      .toString();
+    const template = ssml()
+      .p(
+        ssml()
+          .sayAs("characters", "ssml")
+          .say("templates can get quite complicated")
+      )
+      .p("it's important to keep them composable and parametric")
+      .p(
+        ssml()
+          .say("if you do")
+          .break({ strength: "strong" })
+          .say(p => `you are gonna keep your ${p.quality}`)
+      )
+      .sayAs("interjection", "abracadabra");
 
     return responseBuilder
-      .speak(speechOutput)
+      .speak(renderXml(template))
       .getResponse();
   }
 }
