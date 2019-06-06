@@ -5,6 +5,7 @@ import { LambdaHandler } from 'ask-sdk-core/dist/skill/factory/BaseSkillFactory'
 import { BCOVPlaybackServiceData } from './BCOVPlaybackService';
 import {
   BCOVPresentationIntent,
+  BCOVPlayVideoIntent,
   BCOVSearchPlaylistIntent,
   BCOVSearchVideoIntent,
   BCOVSearchRelatedIntent,
@@ -23,11 +24,11 @@ class BCOVPlayer {
       .addRequestHandlers(
         new LaunchRequestHandler(this.playbackService),
         new BCOVPresentationIntent(),
+        new BCOVPlayVideoIntent(),
         new BCOVSearchPlaylistIntent(),
         new BCOVSearchVideoIntent(),
         new BCOVSearchRelatedIntent(),
       )
-      .addErrorHandlers()
       .lambda();
   }
 }

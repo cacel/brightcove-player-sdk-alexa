@@ -1,10 +1,11 @@
 'use strict';
 
-export const playerIntents = {
-    BCOVPresentationIntent: 'BCOVPresentationIntent',
-    BCOVSearchPlaylistIntent: 'BCOVSearchPlaylistIntent',
-    BCOVSearchVideoIntent: 'BCOVSearchVideoIntent',
-    BCOVSearchRelatedIntent: 'BCOVSearchRelatedIntent',
+export const PLAYER_INTENTS = {
+    PresentationIntent: 'BCOVPresentationIntent',
+    PlayVideoIntent: 'BCOVPlayVideoIntent',
+    SearchPlaylistIntent: 'BCOVSearchPlaylistIntent',
+    SearchVideoIntent: 'BCOVSearchVideoIntent',
+    SearchRelatedIntent: 'BCOVSearchRelatedIntent',
     PauseIntent: 'AMAZON.PauseIntent',
     ResumeIntent: 'AMAZON.ResumeIntent',
     NextIntent: 'AMAZON.NextIntent',
@@ -23,6 +24,7 @@ export const playerIntents = {
 };
 
 export { BCOVPresentationIntent } from './BCOVIntents/BCOVPresentationIntent';
+export { BCOVPlayVideoIntent } from './BCOVIntents/BCOVPlayVideoIntent';
 export { BCOVSearchPlaylistIntent } from './BCOVIntents/BCOVSearchPlaylistIntent';
 export { BCOVSearchVideoIntent } from './BCOVIntents/BCOVSearchVideoIntent';
 export { BCOVSearchRelatedIntent } from './BCOVIntents/BCOVSearchRelatedIntent';

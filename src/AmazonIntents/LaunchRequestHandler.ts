@@ -1,8 +1,8 @@
 'use strict';
 
+import { BCOVPlaybackServiceData } from '../BCOVPlaybackService';
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
-import { BCOVPlaybackService, BCOVPlaybackServiceData } from '../BCOVPlaybackService';
 
 class LaunchRequestHandler implements RequestHandler {
   private readonly playbackService: BCOVPlaybackServiceData;
@@ -20,17 +20,23 @@ class LaunchRequestHandler implements RequestHandler {
     const attributesManager = handlerInput.attributesManager;
     const responseBuilder = handlerInput.responseBuilder;
 
-    const attributes = (await attributesManager.getSessionAttributes()) || {};
+    const attributes = await attributesManager.getSessionAttributes() || {};
     if (Object.keys(attributes).length === 0) {
       attributes.playbackService = this.playbackService;
     }
     attributesManager.setSessionAttributes(attributes);
 
-    const value = await BCOVPlaybackService.findVideos(this.playbackService);
+    const ssml = require('ssml');
+    const ssmlDoc = new ssml();
+    const speechOutput = ssmlDoc.say('This is a great voice application!')
+      .break(500)
+      .prosody({ rate: '0.8' })
+      .say('Awkward pause')
+      .toString({ pretty: true });
 
-    const say = `welcome from google!, the lenght of videos is ${value.length} `;
-
-    return responseBuilder.speak(say).getResponse();
+    return responseBuilder
+      .speak(speechOutput)
+      .getResponse();
   }
 }
 
