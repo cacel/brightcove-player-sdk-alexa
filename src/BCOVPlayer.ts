@@ -32,6 +32,7 @@ class BCOVPlayer {
     return SkillBuilders.custom()
       .addRequestHandlers(
         new LaunchRequestHandler(this.playbackService),
+        new BCOVSearchVideoIntent(),
         /* new HelpRequestHandler(),
         // new BCOVPlayVideoIntent(),
          new StartOverRequestHandler(),
