@@ -12,7 +12,7 @@ import {
   LaunchRequestHandler,
   ExitRequestHandler,
   SessionEndedRequestHandler,
-  HelpRequestHandler
+  HelpRequestHandler,
 } from './Intents';
 import { ErrorRequestHandler } from './AmazonIntents/ErrorRequestHandler';
 
@@ -34,11 +34,9 @@ class BCOVPlayer {
           new BCOVSearchRelatedIntent(),*/
         new HelpRequestHandler(),
         new ExitRequestHandler(),
-        new SessionEndedRequestHandler()
+        new SessionEndedRequestHandler(),
       )
-      .addErrorHandlers(
-        new ErrorRequestHandler()
-      )
+      .addErrorHandlers(new ErrorRequestHandler())
       .lambda();
   }
 }

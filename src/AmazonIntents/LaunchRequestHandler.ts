@@ -29,7 +29,11 @@ class LaunchRequestHandler implements RequestHandler {
 
     const template = ssml().say('Welcome to Brightcove Player.');
 
-    return responseBuilder.speak(renderXml(template)).getResponse();
+    return responseBuilder
+      .speak(renderXml(template))
+      .reprompt(renderXml(template))
+      .withSimpleCard('', 'Brightcove')
+      .getResponse();
   }
 }
 

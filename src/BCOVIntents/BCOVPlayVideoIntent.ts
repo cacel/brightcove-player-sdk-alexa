@@ -27,13 +27,10 @@ class BCOVPlayVideoIntent implements RequestHandler {
       playlist = await BCOVPlaybackService.findVideos(playbackService);
     }
 
-    const supportAudio = Utils.supportAudio(handlerInput);
+    const supportAudio = true; //Utils.supportAudio(handlerInput);
     // const supportVideo = Utils.supportVideo(handlerInput);
 
-
-    return responseBuilder
-      .speak(` audio is ${supportAudio}`)
-      .getResponse();
+    return responseBuilder.speak(` audio is ${supportAudio}`).getResponse();
 
     /* if (playlist.length > 0) {
        videoToPlay = playlist[0];
