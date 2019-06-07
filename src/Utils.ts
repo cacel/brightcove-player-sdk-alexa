@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 
 interface Media {
     isVideo: boolean;
-    uri: string;
+    audioUri: string;
 }
 
 class Utils {
@@ -38,10 +38,13 @@ class Utils {
         const manifest = parser.manifest;
 
         const isVideo = manifest.playlists[0].attributes.hasOwnProperty('RESOLUTION');
-        const lastPlaylist = manifest.playlists.length - 1;
-        const uri = manifest.playlists[0].uri;
 
-        return { isVideo: isVideo, uri: uri };
+        const mediaAudio = Object.keys(manifest.mediaGroups.AUDIO).length - 1;
+        const audio = Object.values(manifest.mediaGroups.AUDIO)[mediaAudio] as object;
+        const audioTrack = Object.values(audio)[0];
+        const audioUri = audioTrack.uri
+
+        return { isVideo: isVideo, audioUri: audioUri };
     }
 }
 

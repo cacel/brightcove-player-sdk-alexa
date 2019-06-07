@@ -45,11 +45,11 @@ class BCOVPlayVideoIntent implements RequestHandler {
         if (supportVideo && media.isVideo) {
           responseBuilder
             .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
-            .speak(`Now playing ${videoToPlay.title}`);
+            .speak(`Now playing video ${videoToPlay.title}`);
         } else {
           responseBuilder
-            .addAudioPlayerPlayDirective('REPLACE_ALL', media.uri, videoToPlay.id, 0)
-            .speak(`Now playing ${videoToPlay.title}`);
+            .addAudioPlayerPlayDirective('REPLACE_ALL', media.audioUri, videoToPlay.id, 0)
+            .speak(`Now playing audio ${videoToPlay.title}`);
         }
         return responseBuilder.getResponse();
       } else {
