@@ -62,5 +62,6 @@ class BCOVPlayVideoIntent implements RequestHandler {
         return responseBuilder.speak(msg).getResponse();
       }*/
   }
+}
 
 export { BCOVPlayVideoIntent };
