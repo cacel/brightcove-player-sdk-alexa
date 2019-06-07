@@ -40,7 +40,7 @@ class BCOVPlayVideoIntent implements RequestHandler {
         attributes.playlist = playlist;
         attributesManager.setSessionAttributes(attributes);
 
-        if (supportVideo) {
+        if (supportVideo && videoToPlay.tags.indexOf('video') > -1) {
           responseBuilder
             .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
             .speak(`Now playing ${videoToPlay.title}`);
@@ -51,8 +51,9 @@ class BCOVPlayVideoIntent implements RequestHandler {
         }
         return responseBuilder
           .getResponse();
+
       } else {
-        msg = 'Decide cannot reproduce media.';
+        msg = 'Device cannot reproduce media.';
       }
     }
 
