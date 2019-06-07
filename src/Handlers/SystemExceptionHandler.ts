@@ -2,19 +2,19 @@
 
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
-import { PLAYER_INTENTS } from '../Intents';
 
-class HelpRequestHandler implements RequestHandler {
+class SystemExceptionHandler implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest' && request.intent.name === PLAYER_INTENTS.HelpIntent;
+    return request.type === 'System.ExceptionEncountered';
   }
 
   public handle(handlerInput: HandlerInput): Response {
+    console.log('\n******************* EXCEPTION **********************');
+    console.log('\n' + JSON.stringify(handlerInput.requestEnvelope, null, 2));
     const responseBuilder = handlerInput.responseBuilder;
-
-    return responseBuilder.speak('welcome from typescript').getResponse();
+    return responseBuilder.getResponse();
   }
 }
 
-export { HelpRequestHandler };
+export { SystemExceptionHandler };

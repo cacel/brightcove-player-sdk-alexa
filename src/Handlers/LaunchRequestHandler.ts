@@ -20,7 +20,7 @@ class LaunchRequestHandler implements RequestHandler {
     const attributesManager = handlerInput.attributesManager;
     const responseBuilder = handlerInput.responseBuilder;
 
-    const attributes = await attributesManager.getSessionAttributes() || {};
+    const attributes = (await attributesManager.getSessionAttributes()) || {};
     attributes.playbackService = this.playbackService;
     attributesManager.setSessionAttributes(attributes);
 

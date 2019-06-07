@@ -3,8 +3,8 @@
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
 import { BCOVPlaybackService, Video } from '../BCOVPlaybackService';
-import { PLAYER_INTENTS } from '../Intents';
-import { Utils, Media } from '../Utils';
+import { PLAYER_INTENTS } from '../Handlers';
+import { Utils, MediaData } from '../Utils';
 
 class BCOVPlayVideoIntent implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
@@ -40,18 +40,12 @@ class BCOVPlayVideoIntent implements RequestHandler {
         attributes.playlist = playlist;
         attributesManager.setSessionAttributes(attributes);
 
-        const media: Media = await Utils.getMedia(videoToPlay.src);
+        const media: MediaData = await Utils.getMedia(videoToPlay.src);
 
-        if (supportVideo && media.isVideo) {
-          responseBuilder
-            .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
-            .withShouldEndSession(false)
-            .speak(`Now playing ${videoToPlay.title}`);
+        if (supportVideo && media.isVideoSupported) {
+          responseBuilder.addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title);
         } else {
-          responseBuilder
-            .addAudioPlayerPlayDirective('REPLACE_ALL', media.audioUri, videoToPlay.id, 0)
-            .withShouldEndSession(false)
-            .speak(`Now playing ${videoToPlay.title}`);
+          responseBuilder.addAudioPlayerPlayDirective('REPLACE_ALL', media.audioUrl, videoToPlay.id, 0);
         }
         return responseBuilder.getResponse();
       } else {
@@ -61,7 +55,6 @@ class BCOVPlayVideoIntent implements RequestHandler {
 
     return responseBuilder.speak(msg).getResponse();
   }
-
 }
 
 export { BCOVPlayVideoIntent };

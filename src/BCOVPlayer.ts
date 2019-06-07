@@ -4,17 +4,22 @@ import { SkillBuilders } from 'ask-sdk-core';
 import { LambdaHandler } from 'ask-sdk-core/dist/skill/factory/BaseSkillFactory';
 import { BCOVPlaybackServiceData } from './BCOVPlaybackService';
 import {
-  BCOVPresentationIntent,
   BCOVPlayVideoIntent,
+  BCOVPresentationIntent,
   BCOVSearchPlaylistIntent,
-  BCOVSearchVideoIntent,
   BCOVSearchRelatedIntent,
-  LaunchRequestHandler,
+  BCOVSearchVideoIntent,
+  ErrorRequestHandler,
   ExitRequestHandler,
-  SessionEndedRequestHandler,
   HelpRequestHandler,
-} from './Intents';
-import { ErrorRequestHandler } from './AmazonIntents/ErrorRequestHandler';
+  LaunchRequestHandler,
+  NextPlaybackHandler,
+  NoRequestHandler,
+  SessionEndedRequestHandler,
+  StartOverRequestHandler,
+  SystemExceptionHandler,
+  YesRequestHandler,
+} from './Handlers';
 
 class BCOVPlayer {
   public readonly playbackService: BCOVPlaybackServiceData;
@@ -27,13 +32,11 @@ class BCOVPlayer {
     return SkillBuilders.custom()
       .addRequestHandlers(
         new LaunchRequestHandler(this.playbackService),
-        // new BCOVPresentationIntent(),
-        new BCOVPlayVideoIntent(),
-        /*  new BCOVSearchPlaylistIntent(),
-          new BCOVSearchVideoIntent(),
-          new BCOVSearchRelatedIntent(),*/
         new HelpRequestHandler(),
+        new BCOVPlayVideoIntent(),
+        new StartOverRequestHandler(),
         new ExitRequestHandler(),
+        new SystemExceptionHandler(),
         new SessionEndedRequestHandler(),
       )
       .addErrorHandlers(new ErrorRequestHandler())
