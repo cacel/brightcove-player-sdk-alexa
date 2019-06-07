@@ -8,13 +8,13 @@ import {
   BCOVPresentationIntent,
   BCOVSearchPlaylistIntent,
   BCOVSearchRelatedIntent,
-  BCOVSearchVideoIntent,
   ErrorRequestHandler,
   ExitRequestHandler,
   HelpRequestHandler,
   LaunchRequestHandler,
   NextPlaybackHandler,
   NoRequestHandler,
+  PlaybackNearlyFinished,
   SessionEndedRequestHandler,
   StartOverRequestHandler,
   SystemExceptionHandler,
@@ -32,14 +32,14 @@ class BCOVPlayer {
     return SkillBuilders.custom()
       .addRequestHandlers(
         new LaunchRequestHandler(this.playbackService),
-        new BCOVSearchVideoIntent(),
         new BCOVPlayVideoIntent(),
-        /* new HelpRequestHandler(),
-        // new BCOVPlayVideoIntent(),
-         new StartOverRequestHandler(),
-         new ExitRequestHandler(),
-         new SystemExceptionHandler(),
-         new SessionEndedRequestHandler(),*/
+        new BCOVSearchRelatedIntent(),
+        new PlaybackNearlyFinished(),
+        new HelpRequestHandler(),
+        new StartOverRequestHandler(),
+        new ExitRequestHandler(),
+        new SystemExceptionHandler(),
+        new SessionEndedRequestHandler(),
       )
       .addErrorHandlers(new ErrorRequestHandler())
       .lambda();

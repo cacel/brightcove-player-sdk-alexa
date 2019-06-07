@@ -3,7 +3,7 @@
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response, IntentRequest } from 'ask-sdk-model';
 import { BCOVPlaybackService, Video } from '../BCOVPlaybackService';
-import { REQUEST_TYPES, PLAYER_INTENTS } from '../Handlers';
+import { PLAYER_INTENTS } from '../Handlers';
 import { Utils, MediaData } from '../Utils';
 
 class BCOVPlayVideoIntent implements RequestHandler {
@@ -18,42 +18,41 @@ class BCOVPlayVideoIntent implements RequestHandler {
     const attributes = await attributesManager.getSessionAttributes();
     const playbackService = attributes.playbackService;
 
-    let videoToPlay: Video;
-    let playlist: Video[];
-
-    if (attributes.hasOwnProperty('playlist')) {
-      playlist = attributes.playlist;
-    } else {
-      playlist = await BCOVPlaybackService.findVideos(playbackService);
-    }
-
     const supportVideo = Utils.supportVideo(handlerInput);
     const supportAudio = Utils.supportAudio(handlerInput);
 
-    let msg = 'No media to play.';
-    if (playlist.length > 0) {
-      if (supportVideo || supportAudio) {
-        videoToPlay = playlist[0];
-        playlist.shift();
+    let msg = '';
 
+    if (supportVideo || supportAudio) {
+      const request = (handlerInput.requestEnvelope.request as IntentRequest);
+      const query = request.intent.slots !== undefined ? request.intent.slots.Query.value : '';
+      const playlist = await BCOVPlaybackService.findVideos(playbackService, { q: query });
+
+      if (playlist.length > 0) {
+        const videoToPlay = playlist[0];
         delete attributes['playlist'];
+        playlist.shift()
         attributes.playlist = playlist;
-        attributesManager.setSessionAttributes(attributes);
+        attributes.videoId = videoToPlay.id;
 
         const media: MediaData = await Utils.getMedia(videoToPlay.src);
-
         if (supportVideo && media.isVideoSupported) {
-          responseBuilder.addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title);
+          responseBuilder
+            .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title);
         } else {
-          responseBuilder.addAudioPlayerPlayDirective('REPLACE_ALL', media.audioUrl, videoToPlay.id, 0);
+          responseBuilder
+            .addAudioPlayerPlayDirective('REPLACE_ALL', media.audioUrl, videoToPlay.id, 0, '');
         }
-        return responseBuilder.getResponse();
       } else {
-        msg = 'Device cannot reproduce media.';
+        msg = 'No media to play.';
       }
+    } else {
+      msg = 'Device cannot reproduce media.';
     }
 
-    return responseBuilder.speak(msg).getResponse();
+    return responseBuilder
+      .speak(msg)
+      .getResponse();
   }
 }
 
