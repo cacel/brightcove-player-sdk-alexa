@@ -10,7 +10,11 @@ import {
   BCOVSearchVideoIntent,
   BCOVSearchRelatedIntent,
   LaunchRequestHandler,
+  ExitRequestHandler,
+  SessionEndedRequestHandler,
+  HelpRequestHandler
 } from './Intents';
+import { ErrorRequestHandler } from './AmazonIntents/ErrorRequestHandler';
 
 class BCOVPlayer {
   public readonly playbackService: BCOVPlaybackServiceData;
@@ -23,11 +27,17 @@ class BCOVPlayer {
     return SkillBuilders.custom()
       .addRequestHandlers(
         new LaunchRequestHandler(this.playbackService),
-        new BCOVPresentationIntent(),
+        // new BCOVPresentationIntent(),
         new BCOVPlayVideoIntent(),
-        new BCOVSearchPlaylistIntent(),
-        new BCOVSearchVideoIntent(),
-        new BCOVSearchRelatedIntent(),
+        /*  new BCOVSearchPlaylistIntent(),
+          new BCOVSearchVideoIntent(),
+          new BCOVSearchRelatedIntent(),*/
+        new HelpRequestHandler(),
+        new ExitRequestHandler(),
+        new SessionEndedRequestHandler()
+      )
+      .addErrorHandlers(
+        new ErrorRequestHandler()
       )
       .lambda();
   }

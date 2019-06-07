@@ -6,6 +6,7 @@ export const PLAYER_INTENTS = {
   SearchPlaylistIntent: 'BCOVSearchPlaylistIntent',
   SearchVideoIntent: 'BCOVSearchVideoIntent',
   SearchRelatedIntent: 'BCOVSearchRelatedIntent',
+  SessionEndedRequest: 'SessionEndedRequest',
   PauseIntent: 'AMAZON.PauseIntent',
   ResumeIntent: 'AMAZON.ResumeIntent',
   NextIntent: 'AMAZON.NextIntent',
@@ -29,3 +30,7 @@ export { BCOVSearchPlaylistIntent } from './BCOVIntents/BCOVSearchPlaylistIntent
 export { BCOVSearchVideoIntent } from './BCOVIntents/BCOVSearchVideoIntent';
 export { BCOVSearchRelatedIntent } from './BCOVIntents/BCOVSearchRelatedIntent';
 export { LaunchRequestHandler } from './AmazonIntents/LaunchRequestHandler';
+export { ExitRequestHandler } from './AmazonIntents/ExitRequestHandler';
+export { HelpRequestHandler } from './AmazonIntents/HelpRequestHandler';
+export { SessionEndedRequestHandler } from './AmazonIntents/SessionEndedRequestHandler';
+export { ErrorRequestHandler } from './AmazonIntents/ErrorRequestHandler';
