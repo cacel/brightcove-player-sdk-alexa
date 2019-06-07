@@ -9,7 +9,9 @@ import { Utils, MediaData } from '../Utils';
 class BCOVPlayVideoIntent implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest' && request.intent.name === PLAYER_INTENTS.PlayVideoIntent;
+    return request.type === 'IntentRequest' &&
+      (request.intent.name === PLAYER_INTENTS.PlayVideoIntent
+        || request.intent.name === PLAYER_INTENTS.StartOverIntent);
   }
 
   public async handle(handlerInput: HandlerInput): Promise<Response> {

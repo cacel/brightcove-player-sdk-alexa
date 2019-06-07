@@ -36,7 +36,7 @@ class BCOVPlayer {
         new BCOVSearchRelatedIntent(),
         new PlaybackNearlyFinished(),
         new HelpRequestHandler(),
-        new StartOverRequestHandler(),
+        //new StartOverRequestHandler(),
         new ExitRequestHandler(),
         new SystemExceptionHandler(),
         new SessionEndedRequestHandler(),

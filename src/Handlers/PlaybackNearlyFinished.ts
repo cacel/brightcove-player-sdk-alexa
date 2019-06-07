@@ -36,7 +36,7 @@ class PlaybackNearlyFinished implements RequestHandler {
                 const media: MediaData = await Utils.getMedia(videoToPlay.src);
                 if (supportVideo && media.isVideoSupported) {
                     responseBuilder
-                        .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title);
+                        .addAudioPlayerPlayDirective('ENQUEUE', media.audioUrl, videoToPlay.id, 0, previousId);
                 } else {
                     responseBuilder
                         .addAudioPlayerPlayDirective('ENQUEUE', media.audioUrl, videoToPlay.id, 0, previousId);
