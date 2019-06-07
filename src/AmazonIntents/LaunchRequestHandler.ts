@@ -26,7 +26,10 @@ class LaunchRequestHandler implements RequestHandler {
 
     const speechOut = 'Welcome to Brightcove Player.';
 
-    return responseBuilder.speak(speechOut).getResponse();
+    return responseBuilder
+      .withSimpleCard('Brightcove', 'Player')
+      .speak(speechOut)
+      .getResponse();
   }
 }
 
