@@ -27,41 +27,39 @@ class BCOVPlayVideoIntent implements RequestHandler {
       playlist = await BCOVPlaybackService.findVideos(playbackService);
     }
 
-    //const supportAudio = Utils.supportAudio(handlerInput);
-    //const supportVideo = Utils.supportVideo(handlerInput);
+    const supportAudio = Utils.supportAudio(handlerInput);
+    const supportVideo = Utils.supportVideo(handlerInput);
 
-    return responseBuilder.speak('ya me harte').getResponse();
-    /*
-        let msg = 'No media to play.';
-        if (playlist.length > 0) {
-          if (supportVideo || supportAudio) {
-            videoToPlay = playlist[0];
-            playlist.shift();
-    
-            delete attributes['playlist'];
-            attributes.playlist = playlist;
-            attributesManager.setSessionAttributes(attributes);
-    
-            const media: Media = await Utils.getMedia(videoToPlay.src);
-    
-            if (supportVideo && media.isVideo) {
-              responseBuilder
-                .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
-                .speak(`Now playing ${videoToPlay.title}`);
-            } else {
-              responseBuilder
-                .addAudioPlayerPlayDirective('REPLACE_ALL', media.uri, videoToPlay.id, 0)
-                .speak(`Now playing ${videoToPlay.title}`);
-            }
-            return responseBuilder.getResponse();
-          } else {
-            msg = 'Device cannot reproduce media.';
-          }
+    let msg = 'No media to play.';
+    if (playlist.length > 0) {
+      if (supportVideo || supportAudio) {
+        videoToPlay = playlist[0];
+        playlist.shift();
+
+        delete attributes['playlist'];
+        attributes.playlist = playlist;
+        attributesManager.setSessionAttributes(attributes);
+
+        const media: Media = await Utils.getMedia(videoToPlay.src);
+
+        if (supportVideo && media.isVideo) {
+          responseBuilder
+            .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
+            .speak(`Now playing ${videoToPlay.title}`);
+        } else {
+          responseBuilder
+            .addAudioPlayerPlayDirective('REPLACE_ALL', media.uri, videoToPlay.id, 0)
+            .speak(`Now playing ${videoToPlay.title}`);
         }
-    
-        return responseBuilder.speak(msg).getResponse();
-      }*/
+        return responseBuilder.getResponse();
+      } else {
+        msg = 'Device cannot reproduce media.';
+      }
+    }
+
+    return responseBuilder.speak(msg).getResponse();
   }
+
 }
 
 export { BCOVPlayVideoIntent };
