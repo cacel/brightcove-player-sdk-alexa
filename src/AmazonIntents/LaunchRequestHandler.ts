@@ -27,13 +27,9 @@ class LaunchRequestHandler implements RequestHandler {
     }
     attributesManager.setSessionAttributes(attributes);
 
-    const template = ssml()
-      .say('Welcome to Brightcove Player.');
+    const speechOut = renderXml(ssml().say('Welcome to Brightcove Player.'));
 
-    return responseBuilder
-      .speak(renderXml(template))
-      .reprompt('')
-      .getResponse();
+    return responseBuilder.speak(speechOut).getResponse();
   }
 }
 

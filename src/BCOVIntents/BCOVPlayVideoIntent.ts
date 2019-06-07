@@ -49,17 +49,13 @@ class BCOVPlayVideoIntent implements RequestHandler {
             .addAudioPlayerPlayDirective('REPLACE_ALL', videoToPlay.src, videoToPlay.id, 0)
             .speak(`Now playing ${videoToPlay.title}`);
         }
-        return responseBuilder
-          .getResponse();
-
+        return responseBuilder.getResponse();
       } else {
         msg = 'Device cannot reproduce media.';
       }
     }
 
-    return responseBuilder
-      .speak(msg)
-      .getResponse();
+    return responseBuilder.speak(msg).getResponse();
   }
 }
 
