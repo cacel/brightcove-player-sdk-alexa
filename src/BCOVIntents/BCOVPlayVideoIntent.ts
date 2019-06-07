@@ -40,13 +40,15 @@ class BCOVPlayVideoIntent implements RequestHandler {
         attributes.playlist = playlist;
         attributesManager.setSessionAttributes(attributes);
 
-        if (supportVideo && videoToPlay.tags.indexOf('video') > -1) {
+        const media = await Utils.getMedia(videoToPlay.src);
+
+        if (supportVideo && media.isVideo) {
           responseBuilder
-            .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
+            .addVideoAppLaunchDirective(media.uri, videoToPlay.title)
             .speak(`Now playing ${videoToPlay.title}`);
         } else {
           responseBuilder
-            .addAudioPlayerPlayDirective('REPLACE_ALL', videoToPlay.src, videoToPlay.id, 0)
+            .addAudioPlayerPlayDirective('REPLACE_ALL', media.uri, videoToPlay.id, 0)
             .speak(`Now playing ${videoToPlay.title}`);
         }
         return responseBuilder.getResponse();
