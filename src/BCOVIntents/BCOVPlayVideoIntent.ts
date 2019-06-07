@@ -30,34 +30,35 @@ class BCOVPlayVideoIntent implements RequestHandler {
     const supportAudio = Utils.supportAudio(handlerInput);
     const supportVideo = Utils.supportVideo(handlerInput);
 
-    return responseBuilder.speak(`video is ${supportVideo} and audio is ${supportAudio}`).getResponse();
+    let msg = 'No media to play.';
+    if (playlist.length > 0) {
+      if (supportVideo || supportAudio) {
+        videoToPlay = playlist[0];
+        playlist.shift();
 
-    /* if (playlist.length > 0) {
-       videoToPlay = playlist[0];
-       playlist.shift();
- 
-       delete attributes['playlist'];
-       attributes.playlist = playlist;
-       attributesManager.setSessionAttributes(attributes);
-       const supportVideo = Utils.supportVideo(handlerInput);
-       const supportAudio = Utils.supportAudio(handlerInput);
- /*
-       if (supportVideo) {
-         return responseBuilder
-           
-           .speak(`Playing: ${sup}`).getResponse();
-       } else {
-         return responseBuilder
-           .speak(`video cannot be played but audio is ${supportAudio}`)
-           .getResponse();
-       }
-     } else {
-       return responseBuilder
-         .speak('no videos to play')
-         .getResponse();;
-     }
-     return responseBuilder
-       .getResponse();*/
+        delete attributes['playlist'];
+        attributes.playlist = playlist;
+        attributesManager.setSessionAttributes(attributes);
+
+        if (supportVideo) {
+          responseBuilder
+            .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
+            .speak(`Now playing ${videoToPlay.title}`);
+        } else {
+          responseBuilder
+            .addAudioPlayerPlayDirective('REPLACE_ALL', videoToPlay.src, videoToPlay.id, 0)
+            .speak(`Now playing ${videoToPlay.title}`);
+        }
+        return responseBuilder
+          .getResponse();
+      } else {
+        msg = 'Decide cannot reproduce media.';
+      }
+    }
+
+    return responseBuilder
+      .speak(msg)
+      .getResponse();
   }
 }
 
