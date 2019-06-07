@@ -32,12 +32,12 @@ class BCOVPlayer {
     return SkillBuilders.custom()
       .addRequestHandlers(
         new LaunchRequestHandler(this.playbackService),
-        new HelpRequestHandler(),
-        new BCOVPlayVideoIntent(),
-        new StartOverRequestHandler(),
-        new ExitRequestHandler(),
-        new SystemExceptionHandler(),
-        new SessionEndedRequestHandler(),
+        /* new HelpRequestHandler(),
+        // new BCOVPlayVideoIntent(),
+         new StartOverRequestHandler(),
+         new ExitRequestHandler(),
+         new SystemExceptionHandler(),
+         new SessionEndedRequestHandler(),*/
       )
       .addErrorHandlers(new ErrorRequestHandler())
       .lambda();

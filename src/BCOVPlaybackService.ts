@@ -22,6 +22,7 @@ interface Video {
   id: string;
   src: string;
   title: string;
+  poster: string;
   tags: string[];
 }
 
@@ -235,6 +236,7 @@ class BCOVPlaybackService {
             id: video.id,
             title: video.name,
             src: source.src,
+            poster: source.poster,
             tags: video.tags,
           });
         }
@@ -254,6 +256,7 @@ class BCOVPlaybackService {
           id: video.id,
           title: video.name,
           src: source.src,
+          poster: video.poster,
           tags: video.tags,
         };
         return [objVideo];

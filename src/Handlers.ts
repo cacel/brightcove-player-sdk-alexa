@@ -1,29 +1,50 @@
 'use strict';
 
 export const PLAYER_INTENTS = {
-  PresentationIntent: 'BCOVPresentationIntent',
-  PlayVideoIntent: 'BCOVPlayVideoIntent',
-  SearchPlaylistIntent: 'BCOVSearchPlaylistIntent',
-  SearchVideoIntent: 'BCOVSearchVideoIntent',
-  SearchRelatedIntent: 'BCOVSearchRelatedIntent',
-  SessionEndedRequest: 'SessionEndedRequest',
-  PauseIntent: 'AMAZON.PauseIntent',
-  ResumeIntent: 'AMAZON.ResumeIntent',
-  NextIntent: 'AMAZON.NextIntent',
-  PreviousIntent: 'AMAZON.PreviousIntent',
-  StopIntent: 'AMAZON.StopIntent',
+  // Amazon Intents
   CancelIntent: 'AMAZON.CancelIntent',
   HelpIntent: 'AMAZON.HelpIntent',
-  ScrollDownIntent: 'AMAZON.ScrollDownIntent',
-  ScrollUpIntent: 'AMAZON.ScrollUpIntent',
-  ScrollLeftIntent: 'AMAZON.ScrollLeftIntent',
-  ScrollRightIntent: 'AMAZON.ScrollRightIntent',
-  MoreIntent: 'AMAZON.MoreIntent',
-  PageDownIntent: 'AMAZON.PageDownIntent',
-  PageUpIntent: 'AMAZON.PageUpIntent',
-  NavigateSettingsIntent: 'AMAZON.NavigateSettingsIntent',
+  LoopOffIntent: 'AMAZON.LoopOffIntent',
+  LoopOnIntent: 'AMAZON.LoopOnIntent',
+  NextIntent: 'AMAZON.NextIntent',
+  NoIntent: 'AMAZON.NoIntent',
+  PauseIntent: 'AMAZON.PauseIntent',
+  PreviousIntent: 'AMAZON.PreviousIntent',
+  RepeatIntent: 'AMAZON.RepeatIntent',
+  ResumeIntent: 'AMAZON.ResumeIntent',
+  ShuffleOffIntent: 'AMAZON.ShuffleOffIntent',
+  ShuffleOnIntent: 'AMAZON.ShuffleOnIntent',
+  StartOverIntent: 'AMAZON.StartOverIntent',
+  StopIntent: 'AMAZON.StopIntent',
   YesIntent: 'AMAZON.YesIntent',
-  NoIntent: 'AMAZON.YesIntent',
+
+  // Brightcove Player
+  SearchVideoIntent: 'BCOVSearchVideoIntent',
+  SearchRelatedIntent: 'BCOVSearchRelatedIntent',
+  SearchPlaylistIntent: 'BCOVSearchPlaylistIntent',
+  PlayVideoIntent: 'BCOVPlayVideoIntent',
+};
+
+export const REQUEST_TYPES = {
+  // Amazon
+  ExceptionEncountered: 'System.ExceptionEncountered',
+  LaunchRequest: 'LaunchRequest',
+  IntentRequest: 'IntentRequest',
+  SessionEndedRequest: 'SessionEndedRequest',
+
+  // PlaybackController
+  PlayCommandIssued: 'PlaybackController.PlayCommandIssued',
+  PauseCommandIssued: 'PlaybackController.PauseCommandIssued',
+  NextCommandIssued: 'PlaybackController.NextCommandIssued',
+  PreviousCommandIssued: 'PlaybackController.PreviousCommandIssued',
+
+  // AudioPlayer
+  PlaybackStarted: 'AudioPlayer.PlaybackStarted',
+  PlaybackStopped: 'AudioPlayer.PlaybackStopped',
+  PlaybackFinished: 'AudioPlayer.PlaybackFinished',
+  PlaybackNearlyFinished: 'AudioPlayer.PlaybackNearlyFinished',
+  PlaybackFailed: 'AudioPlayer.PlaybackFailed'
+
 };
 
 export { BCOVPlayVideoIntent } from './Handlers/BCOVPlayVideoIntent';

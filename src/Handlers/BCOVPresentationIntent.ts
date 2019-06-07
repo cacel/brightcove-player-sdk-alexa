@@ -8,7 +8,7 @@ import { PLAYER_INTENTS } from '../Handlers';
 class BCOVPresentationIntent implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest' && request.intent.name === PLAYER_INTENTS.PresentationIntent;
+    return true; //request.type === 'IntentRequest' && request.intent.name === PLAYER_INTENTS;
   }
 
   public async handle(handlerInput: HandlerInput): Promise<Response> {

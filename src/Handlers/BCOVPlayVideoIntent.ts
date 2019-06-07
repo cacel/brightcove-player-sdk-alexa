@@ -3,13 +3,13 @@
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
 import { BCOVPlaybackService, Video } from '../BCOVPlaybackService';
-import { PLAYER_INTENTS } from '../Handlers';
+import { REQUEST_TYPES, PLAYER_INTENTS } from '../Handlers';
 import { Utils, MediaData } from '../Utils';
 
 class BCOVPlayVideoIntent implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest' && request.intent.name === PLAYER_INTENTS.PlayVideoIntent;
+    return true; //request.type === 'LaunchRequest' && request.intent.name === PLAYER_INTENTS.PlayVideoIntent;
   }
 
   public async handle(handlerInput: HandlerInput): Promise<Response> {

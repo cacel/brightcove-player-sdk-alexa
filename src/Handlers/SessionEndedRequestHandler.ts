@@ -7,7 +7,7 @@ import { PLAYER_INTENTS } from '../Handlers';
 class SessionEndedRequestHandler implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === 'IntentRequest' && request.intent.name === PLAYER_INTENTS.SessionEndedRequest;
+    return request.type === 'IntentRequest' && request.intent.name === 'SessionEndedRequest';
   }
 
   public handle(handlerInput: HandlerInput): Response {
