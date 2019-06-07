@@ -18,12 +18,23 @@ class BCOVSearchVideoIntent implements RequestHandler {
     const playbackService = attributes.playbackService;
     const request = (handlerInput.requestEnvelope.request as IntentRequest);
     const query = request.intent.slots !== undefined ? request.intent.slots.Query.value : '';
-    const search = await BCOVPlaybackService.findVideos(playbackService, { q: query });
+    const playlist = await BCOVPlaybackService.findVideos(playbackService, { q: query });
 
-    const say = `you say ${query} and i found ${search.length} videos`;
-    return responseBuilder
-      .speak(say)
-      .getResponse();
+    if (playlist.length > 0) {
+      attributes.playlist = playlist;
+      return responseBuilder
+        .addDelegateDirective({
+          name: PLAYER_INTENTS.PlayVideoIntent,
+          confirmationStatus: 'NONE',
+          slots: {}
+        })
+        .getResponse();
+    } else {
+      const say = `I could not find any media using ${query}. Please try again`;
+      return responseBuilder
+        .speak(say)
+        .getResponse();
+    }
   }
 }
 

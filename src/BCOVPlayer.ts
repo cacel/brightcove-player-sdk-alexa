@@ -33,6 +33,7 @@ class BCOVPlayer {
       .addRequestHandlers(
         new LaunchRequestHandler(this.playbackService),
         new BCOVSearchVideoIntent(),
+        new BCOVPlayVideoIntent(),
         /* new HelpRequestHandler(),
         // new BCOVPlayVideoIntent(),
          new StartOverRequestHandler(),

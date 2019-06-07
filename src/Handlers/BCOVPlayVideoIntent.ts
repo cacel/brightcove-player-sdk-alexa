@@ -1,7 +1,7 @@
 'use strict';
 
 import { HandlerInput, RequestHandler } from 'ask-sdk-core';
-import { Response } from 'ask-sdk-model';
+import { Response, IntentRequest } from 'ask-sdk-model';
 import { BCOVPlaybackService, Video } from '../BCOVPlaybackService';
 import { REQUEST_TYPES, PLAYER_INTENTS } from '../Handlers';
 import { Utils, MediaData } from '../Utils';
@@ -9,7 +9,7 @@ import { Utils, MediaData } from '../Utils';
 class BCOVPlayVideoIntent implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
     const request = handlerInput.requestEnvelope.request;
-    return true; //request.type === 'LaunchRequest' && request.intent.name === PLAYER_INTENTS.PlayVideoIntent;
+    return request.type === 'IntentRequest' && request.intent.name === PLAYER_INTENTS.PlayVideoIntent;
   }
 
   public async handle(handlerInput: HandlerInput): Promise<Response> {
@@ -27,8 +27,8 @@ class BCOVPlayVideoIntent implements RequestHandler {
       playlist = await BCOVPlaybackService.findVideos(playbackService);
     }
 
-    const supportAudio = Utils.supportAudio(handlerInput);
     const supportVideo = Utils.supportVideo(handlerInput);
+    const supportAudio = Utils.supportAudio(handlerInput);
 
     let msg = 'No media to play.';
     if (playlist.length > 0) {
