@@ -4,7 +4,7 @@ import { HandlerInput, RequestHandler } from 'ask-sdk-core';
 import { Response } from 'ask-sdk-model';
 import { BCOVPlaybackService, Video } from '../BCOVPlaybackService';
 import { PLAYER_INTENTS } from '../Intents';
-import { Utils } from '../Utils';
+import { Utils, Media } from '../Utils';
 
 class BCOVPlayVideoIntent implements RequestHandler {
   public canHandle(handlerInput: HandlerInput): boolean {
@@ -40,11 +40,11 @@ class BCOVPlayVideoIntent implements RequestHandler {
         attributes.playlist = playlist;
         attributesManager.setSessionAttributes(attributes);
 
-        const media = await Utils.getMedia(videoToPlay.src);
+        const media: Media = await Utils.getMedia(videoToPlay.src);
 
         if (supportVideo && media.isVideo) {
           responseBuilder
-            .addVideoAppLaunchDirective(media.uri, videoToPlay.title)
+            .addVideoAppLaunchDirective(videoToPlay.src, videoToPlay.title)
             .speak(`Now playing ${videoToPlay.title}`);
         } else {
           responseBuilder
