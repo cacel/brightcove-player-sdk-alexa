@@ -52,7 +52,7 @@
     "fluent-ssml": "^0.2.7",
     "lodash": "^4.17.11",
     "m3u8-parser": "^4.3.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "sprintf-js": "^1.1.2",
     "ssml": "0.0.4",
     "url": "^0.11.0"
